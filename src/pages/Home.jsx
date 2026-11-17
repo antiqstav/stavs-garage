@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
-import DemoPanel from '../components/DemoPanel.jsx'
 import FeatureCard from '../components/FeatureCard.jsx'
 import { features } from '../features/index.js'
 
 export default function Home() {
-  const [first, ...rest] = features
+  // The first two features sit beside the intro; any others are listed below it.
+  const top = features.slice(0, 2)
+  const rest = features.slice(2)
   return (
     <>
       <div className="hero">
@@ -19,12 +20,9 @@ export default function Home() {
             <Link to="/about" className="btn">About me</Link>
           </div>
         </div>
-        {first ? (
-          <div>
-            <p>Featured build:</p>
-          <DemoPanel title={first.title}>
-            <first.Demo />
-          </DemoPanel>
+        {top.length > 0 ? (
+          <div className="grid hero-picks">
+            {top.map((f) => <FeatureCard key={f.slug} feature={f} />)}
           </div>
         ) : (
           <div className="slot">

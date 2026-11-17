@@ -20,11 +20,18 @@ export default function FeatureDetail() {
       <DemoPanel title={feature.title}>
         <feature.Demo />
       </DemoPanel>
-      <section className="section">
-        <h2>How it works</h2>
-        <p>{feature.details}</p>
-        {feature.repo && (
-          <p><a href={feature.repo} target="_blank" rel="noopener noreferrer">View source on GitHub</a></p>
+      <section className={feature.Diagram ? 'section how-it-works with-diagram' : 'section how-it-works'}>
+        <div>
+          <h2>How it works</h2>
+          <p>{feature.details}</p>
+          {feature.repo && (
+            <p><a href={feature.repo} target="_blank" rel="noopener noreferrer">View source on GitHub</a></p>
+          )}
+        </div>
+        {feature.Diagram && (
+          <figure className="how-diagram">
+            <feature.Diagram />
+          </figure>
         )}
       </section>
       <nav className="pager" aria-label="More features">

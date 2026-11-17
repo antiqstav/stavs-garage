@@ -1,4 +1,4 @@
-import { NavLink, Link, Outlet } from 'react-router-dom'
+import { NavLink, Link, Outlet, useLocation } from 'react-router-dom'
 
 const links = [
   { to: '/', label: 'Home', end: true },
@@ -7,7 +7,11 @@ const links = [
   { to: '/contact', label: 'Contact' },
 ]
 
+// Served from public/; opens in a new tab.
+export const RESUME_URL = '/Stavya-Palassery-Resume.pdf'
+
 export default function Layout() {
+  const { pathname } = useLocation()
   return (
     <div className="shell">
       <div className="panel">
@@ -20,11 +24,13 @@ export default function Layout() {
                 {l.label}
               </NavLink>
             ))}
+            <a href={RESUME_URL} target="_blank" rel="noopener noreferrer">Résumé</a>
           </nav>
         </div>
       </header>
       <main>
-        <div className="wrap"><Outlet /></div>
+        {/* Keyed on the path so each new page mounts fresh and plays the fade-in in App.css. */}
+        <div className="wrap page-fade" key={pathname}><Outlet /></div>
       </main>
       <footer className="site-footer">
         <div className="wrap">

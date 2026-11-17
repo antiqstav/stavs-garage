@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const EMAIL = 'you@example.com' // TODO: replace with your real address
+const EMAIL = 'stavya.palassery@gmail.com'
 
 export default function Contact() {
   const [name, setName] = useState('')
