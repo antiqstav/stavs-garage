@@ -1,9 +1,9 @@
-export default function DemoPanel({ title, children }) {
+export default function DemoPanel({ title, ticker, children }) {
   return (
     <section className="demo" aria-label={`${title} demo`}>
       <div className="demo-bar">
-        <span>{title}</span>
-        <span className="live">Live demo</span>
+        <span>{ticker && <b>{ticker}</b>}{title}</span>
+        <span className="live">Live</span>
       </div>
       <div className="demo-body">{children}</div>
     </section>

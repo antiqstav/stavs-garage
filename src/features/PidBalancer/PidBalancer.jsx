@@ -30,7 +30,7 @@ function draw(canvas, sim) {
   if (sim.wind !== 0) {
     const dir = Math.sign(sim.wind)
     const strength = Math.abs(sim.wind) / MAX_WIND
-    ctx.strokeStyle = 'rgba(79, 101, 84, .35)'
+    ctx.strokeStyle = color('--dim')
     ctx.lineWidth = 1.5
     const t = sim.time * 140 * dir
     for (let i = 0; i < 9; i++) {
@@ -54,7 +54,7 @@ function draw(canvas, sim) {
   ctx.stroke()
   ctx.lineWidth = 1
   ctx.fillStyle = color('--muted')
-  ctx.font = `12px ${css.getPropertyValue('--font-body')}`
+  ctx.font = `11px ${css.getPropertyValue('--font-mono')}`
   ctx.textAlign = 'center'
   for (let m = -2; m <= 2; m += 0.5) {
     ctx.beginPath()
@@ -63,13 +63,13 @@ function draw(canvas, sim) {
     ctx.stroke()
     if (Number.isInteger(m)) ctx.fillText(`${m < 0 ? '−' : ''}${Math.abs(m)} m`, px(m), floor + 24)
   }
-  ctx.fillStyle = color('--ink')
+  ctx.fillStyle = color('--muted')
   for (const s of [-1, 1]) ctx.fillRect(px(s * (TRACK_HALF + 0.3)) - (s > 0 ? 8 : 0), floor - 40, 8, 40)
 
   // target flag
   const tx = px(sim.targetX)
-  ctx.strokeStyle = color('--accent')
-  ctx.fillStyle = color('--accent')
+  ctx.strokeStyle = color('--signal')
+  ctx.fillStyle = color('--signal')
   ctx.lineWidth = 2
   ctx.beginPath()
   ctx.moveTo(tx, floor)
@@ -93,7 +93,7 @@ function draw(canvas, sim) {
   ctx.roundRect(cx - cw / 2, cartTop, cw, ch, 5)
   ctx.fill()
   ctx.stroke()
-  ctx.fillStyle = color('--ink')
+  ctx.fillStyle = color('--muted')
   for (const s of [-1, 1]) {
     ctx.beginPath()
     ctx.arc(cx + (s * cw) / 3, floor - 0.05 * k, 0.05 * k, 0, 2 * Math.PI)
@@ -106,7 +106,7 @@ function draw(canvas, sim) {
     const len = f * cw * 1.3
     const y = cartTop + ch / 2
     const x0 = cx + (Math.sign(f) * cw) / 2
-    ctx.strokeStyle = Math.abs(f) > 0.98 ? '#8a2b1d' : color('--accent')
+    ctx.strokeStyle = Math.abs(f) > 0.98 ? color('--down') : color('--accent')
     ctx.fillStyle = ctx.strokeStyle
     ctx.lineWidth = 3
     ctx.beginPath()
@@ -135,7 +135,7 @@ function draw(canvas, sim) {
   }
   const tipX = cx + Math.sin(sim.theta) * L
   const tipY = pivotY - Math.cos(sim.theta) * L
-  ctx.strokeStyle = sim.status === 'fell' ? '#8a2b1d' : color('--ink')
+  ctx.strokeStyle = sim.status === 'fell' ? color('--down') : color('--ink')
   ctx.lineWidth = 7
   ctx.lineCap = 'round'
   ctx.beginPath()
@@ -295,7 +295,6 @@ export default function PidBalancer() {
 
   const v = view
   const down = v && v.status !== 'balancing'
-  const presetNote = PRESETS.find((p) => p.id === preset)?.note
   return (
     <div className="pid">
       <div className="pid-presets" role="group" aria-label="Presets">
@@ -306,7 +305,6 @@ export default function PidBalancer() {
           ))}
         </div>
       </div>
-      <p className="obr-about">{presetNote ? <><strong>{PRESETS.find((p) => p.id === preset).label}:</strong> {presetNote}</> : <><strong>Custom:</strong> your own tune. Can you keep it up?</>}</p>
 
       <div className="pid-stage">
         <canvas ref={canvasRef} className="pid-canvas" role="img"
@@ -314,7 +312,7 @@ export default function PidBalancer() {
         {(!v || down) && (
           <div className="pid-overlay" role="status">
             {!v
-              ? <><strong>Can you keep the stick up?</strong><span>Pick a preset or tune the sliders, then press Start.</span></>
+              ? <><strong>Can you keep the stick up?</strong></>
               : <><strong>{v.status === 'wall' ? 'Hit the end of the track' : 'It fell over'} after {v.balanced.toFixed(1)} s</strong><span>{v.why}</span></>}
             <button type="button" className="btn primary small" onClick={restart}>{v ? 'Try again' : 'Start'}</button>
           </div>

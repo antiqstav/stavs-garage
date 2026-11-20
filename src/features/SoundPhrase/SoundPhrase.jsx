@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { decodeToMono16k, MAX_MINUTES } from './audio.js'
+import { decodeToMono16k } from './audio.js'
 
 const FRIENDLY_WORKER_ERROR =
   "Something went wrong while transcribing. The model downloads the first time, so check your connection and try again."
@@ -140,9 +140,6 @@ export default function SoundPhrase() {
         onDrop={(e) => { e.preventDefault(); setDragging(false); transcribe(e.dataTransfer.files[0]) }}
       >
         <strong>Drop an audio or video file here</strong>
-        <span>or click to choose one</span>
-        <span className="hint">English speech, up to {MAX_MINUTES} minutes. Your file stays on your device.</span>
-        <span className="hint">Accepted formats: mp4, mov, wmv, wav, mp3, flac, and wma.</span>
         <input
           className="sr-only"
           type="file"

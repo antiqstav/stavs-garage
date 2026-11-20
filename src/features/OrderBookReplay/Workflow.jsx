@@ -4,7 +4,7 @@ import FlowDiagram from '../../components/FlowDiagram.jsx'
 export default function Workflow() {
   return (
     <FlowDiagram
-      title="How Order Book Replay works"
+      title="How the HFT Simulator works"
       description="Recorded messages update the order book. The market maker reads the best bid and ask and sends quotes, which arrive after a latency delay and join the queue. The fill model compares each recorded trade with your place in line to decide your fills, which update profit and position. Position feeds back to cap the quotes."
       steps={[
         { title: 'LOBSTER messages', lines: ['3,000 real GOOG order events', 'from June 21, 2012'], kind: 'data' },

@@ -300,7 +300,6 @@ export default function ViolinTuner() {
             <label htmlFor="tn-a4">Concert A <strong>{a4} Hz</strong></label>
             <input id="tn-a4" type="range" min={436} max={446} step={1} value={a4} onChange={(e) => changeA4(Number(e.target.value))} />
           </div>
-          <p className="hint">Everything runs in your browser. Audio never leaves your device.</p>
         </div>
       </div>
     </div>

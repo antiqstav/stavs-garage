@@ -1,50 +1,56 @@
-/* IBM Plex Serif: large text. Instrument Serif: small text and subtitles (regular + italic only). */
-@font-face { font-family: 'IBM Plex Serif'; font-weight: 500; font-style: normal; font-display: swap; src: url('./fonts/IBMPlexSerif-Medium.woff2') format('woff2'); }
-@font-face { font-family: 'IBM Plex Serif'; font-weight: 700; font-style: normal; font-display: swap; src: url('./fonts/IBMPlexSerif-Bold.woff2') format('woff2'); }
-@font-face { font-family: 'Instrument Serif'; font-weight: 400; font-style: normal; font-display: swap; src: url('./fonts/InstrumentSerif-Regular.woff2') format('woff2'); }
-@font-face { font-family: 'Instrument Serif'; font-weight: 400; font-style: italic; font-display: swap; src: url('./fonts/InstrumentSerif-Italic.woff2') format('woff2'); }
-
+/* ---------- Terminal theme tokens ----------
+   The demos read these names from their canvases too (--paper, --surface, --ink, --muted,
+   --line, --accent, --signal, --up, --down), so change colors here, not in components. */
 :root {
-  --sage: #595E48;      /* page background */
-  --paper: #e6f0dd;     /* the block in front */
-  --surface: #f5faf0;   /* cards and demo panels */
-  --ink: #1f3324;
-  --muted: #4f6554;
-  --line: #bccdb0;
-  --accent: #2f6b45;
-  --accent-ink: #ffffff;
-  --signal: #f2c94c;
-  --font-display: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
-  --font-body: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  color-scheme: dark;
+
+  --bg: #06080b;          /* page background */
+  --paper: #0b1015;       /* inset wells: charts, ladders, canvases */
+  --surface: #10161d;     /* panels and cards */
+  --raised: #17202a;      /* headers, buttons, hover */
+  --line: #1f2a35;        /* hairlines */
+  --line-strong: #2e3c4b; /* panel borders */
+
+  --ink: #dbe4ec;         /* main text */
+  --muted: #8a9aab;       /* secondary text */
+  --dim: #5b6a7a;         /* tertiary text, gridlines */
+
+  --signal: #f0353f;      /* cardinal red: brand, active, highlights */
+  --signal-ink: #06080b;  /* text on cardinal */
+  --gold: #ffcc00;        /* USC gold: second accent for awards, prompts and the brand */
+  --accent: #3fb950;      /* green: primary data, "good" */
+  --accent-ink: #06080b;
+  --up: #3fb950;          /* gains, bids */
+  --down: #f85149;        /* losses, asks, errors */
+  --info: #4cc9f0;        /* neutral highlight */
+
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  /* older names still used by a few components */
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body, #root { min-height: 100%; }
 body {
   margin: 0;
-  background-color: var(--sage);
-  /* pegboard: a grid of holes with a faint rim light under each one */
+  background-color: var(--bg);
+  /* a very faint chart grid behind everything */
   background-image:
-    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, .38) 0 3px, transparent 3.5px),
-    radial-gradient(circle at 50% 56%, rgba(255, 255, 255, .09) 0 4.5px, transparent 5px);
-  background-size: 30px 30px;
+    linear-gradient(rgba(138, 154, 171, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 154, 171, .045) 1px, transparent 1px);
+  background-size: 32px 32px;
   color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 1.3rem;
-  line-height: 1.5;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0 0 .5em; letter-spacing: -0.01em; font-weight: 700; }
-p + p { margin-top: 0; }
-a { color: var(--accent); }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-.highlight {color: #990000;}
-
-.flex-container {
-  display: flex;
-  gap: 20px;
-}
-
-.box {
-  flex: 1;
-  padding: 20px;
-}
+h1, h2, h3 { font-family: var(--font-sans); line-height: 1.15; margin: 0 0 .5em; letter-spacing: -0.015em; font-weight: 700; color: #f2f6fa; }
+p { margin: 0 0 1em; }
+a { color: var(--signal); text-underline-offset: 3px; }
+a:hover { color: #ffc55c; }
+::selection { background: rgba(240, 53, 63, .3); }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; border-radius: 3px; }
+.highlight { color: #ff6b6b; } /* USC cardinal, lifted for a dark background */

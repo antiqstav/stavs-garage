@@ -14,10 +14,24 @@ export default function FeatureDetail() {
 
   return (
     <>
-      <p className="crumbs"><Link to="/features">Features</Link> / {feature.title}</p>
-      <h1 className="page-title">{feature.title}</h1>
-      <p>{feature.summary}</p>
-      <DemoPanel title={feature.title}>
+      <p className="crumbs"><Link to="/features">Features</Link> / {feature.ticker || feature.title}</p>
+      <div className="feature-head">
+        <h1 className="page-title">{feature.title}</h1>
+        {feature.ticker && <span className="sym">{feature.ticker}</span>}
+      </div>
+      <p className="lede">{feature.summary}</p>
+      {(feature.stack || feature.repo) && (
+        <div className="feature-meta">
+          {feature.stack && (
+            <div className="tags" aria-label="Built with">
+              <span className="label">Stack</span>
+              {feature.stack.map((s) => <span key={s} className="tag">{s}</span>)}
+            </div>
+          )}
+          {feature.repo && <a href={feature.repo} target="_blank" rel="noopener noreferrer">Code on GitHub ↗</a>}
+        </div>
+      )}
+      <DemoPanel title={feature.title} ticker={feature.ticker}>
         <feature.Demo />
       </DemoPanel>
       <section className={feature.Diagram ? 'section how-it-works with-diagram' : 'section how-it-works'}>

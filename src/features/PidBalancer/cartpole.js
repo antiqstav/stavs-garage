@@ -195,11 +195,11 @@ export class CartPole {
 
 // Presets that each show one lesson. Each was checked in Node.
 export const PRESETS = [
-  { id: 'weak', label: 'Too weak', gains: { kp: 8, kd: 0, xp: 0, xi: 0, xd: 0 }, note: 'Stick P is too small to catch the stick.' },
-  { id: 'p-only', label: 'P only', gains: { kp: 40, kd: 0, xp: 0, xi: 0, xd: 0 }, note: 'Strong P with no D wobbles until it falls.' },
-  { id: 'pd', label: 'Stick PD', gains: { kp: 40, kd: 7, xp: 0, xi: 0, xd: 0 }, note: 'The stick stays up, but the cart drifts away.' },
-  { id: 'cart-pd', label: '+ Cart PD', gains: { kp: 40, kd: 7, xp: 0.06, xi: 0, xd: 0.1 }, note: 'Holds the target, until the wind blows: then it settles off to one side.' },
-  { id: 'tuned', label: 'Full PID', gains: { kp: 40, kd: 7, xp: 0.06, xi: 0.01, xd: 0.1 }, note: 'Cart I slowly cancels the wind and returns to the target.' },
+  { id: 'weak', label: 'Too weak', gains: { kp: 8, kd: 0, xp: 0, xi: 0, xd: 0 } },
+  { id: 'p-only', label: 'P only', gains: { kp: 40, kd: 0, xp: 0, xi: 0, xd: 0 } },
+  { id: 'pd', label: 'Stick PD', gains: { kp: 40, kd: 7, xp: 0, xi: 0, xd: 0 } },
+  { id: 'cart-pd', label: '+ Cart PD', gains: { kp: 40, kd: 7, xp: 0.06, xi: 0, xd: 0.1 } },
+  { id: 'tuned', label: 'Full PID', gains: { kp: 40, kd: 7, xp: 0.06, xi: 0.01, xd: 0.1 } },
 ]
 
 // Slider ranges for the UI.

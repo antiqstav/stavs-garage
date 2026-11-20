@@ -6,10 +6,10 @@ import {
 const LEVELS = 10
 
 const MODELS = [
-  { id: 'naive', label: 'Naive', about: 'Every trade at your price fills you, as if nobody were ahead of you in line.' },
-  { id: 'pessimistic', label: 'Pessimistic', about: 'You wait behind every share that was there first. Cancels never move you up.' },
-  { id: 'optimistic', label: 'Optimistic', about: 'Every cancel at your price is assumed to come from ahead of you, so you move up.' },
-  { id: 'idbased', label: 'ID-based', about: 'Tracks the order ids ahead of you. Only those leaving moves you up.' },
+  { id: 'naive', label: 'Naive' },
+  { id: 'pessimistic', label: 'Pessimistic' },
+  { id: 'optimistic', label: 'Optimistic' },
+  { id: 'idbased', label: 'ID-based' },
 ]
 
 const LATENCIES = [
@@ -251,7 +251,7 @@ export default function OrderBookReplay() {
         start(d, 'pessimistic', 0)
       })
       .catch((err) => {
-        console.error('Order Book Replay data failed to load:', err)
+        console.error('HFT Simulator data failed to load:', err)
         if (alive) setLoadError('The market data did not load. Check your connection and refresh the page.')
       })
     return () => { alive = false }
@@ -320,9 +320,6 @@ export default function OrderBookReplay() {
     })
   }
 
-  const current = MODELS.find((m) => m.id === model)
-  const latencyLabel = latency === 0 ? 'zero' : LATENCIES.find((l) => l.ns === latency).label
-
   return (
     <div className="obr">
       <div className="obr-controls">
@@ -331,7 +328,6 @@ export default function OrderBookReplay() {
         <Segmented label="Latency" value={latency} onChange={chooseLatency}
           options={LATENCIES.map((l) => ({ value: l.ns, label: l.label }))} />
       </div>
-      <p className="obr-about"><strong>{current.label}:</strong> {current.about}</p>
 
       <div className="obr-transport">
         <button type="button" className="btn primary small" onClick={togglePlay} disabled={view.done}>
@@ -368,7 +364,6 @@ export default function OrderBookReplay() {
           <PnlChart series={view.series} total={view.total} />
 
           <ol className="obr-tape" aria-label="Latest messages">
-            {view.tape.length === 0 && <li className="hint">Press Play to replay the exchange’s messages.</li>}
             {view.tape.map((e) => (
               <li key={e.key} className={e.fill ? 'fill' : undefined}>
                 <span className="obr-t">{clock(e.t).split(' ')[0].slice(-9)}</span>
@@ -381,16 +376,12 @@ export default function OrderBookReplay() {
 
       <div className="obr-compare-wrap">
         <div className="obr-compare-head">
-          <div>
-            <h3>Same market, four answers</h3>
-            <p className="hint">Runs all four fill models over the whole window at {latencyLabel} latency.</p>
-          </div>
+          <h3>Same market, four answers</h3>
           <button type="button" className="btn small" onClick={runCompare}>
             {compare ? 'Run again' : 'Compare models'}
           </button>
         </div>
         {compare && <Compare results={compare.results} current={model} />}
-        {compare && compare.latency !== latency && <p className="hint">These results are for a different latency. Run again to update them.</p>}
       </div>
     </div>
   )

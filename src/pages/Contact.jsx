@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const EMAIL = 'stavya.palassery@gmail.com'
+import { EMAIL } from '../links.js'
 
 export default function Contact() {
   const [name, setName] = useState('')
@@ -10,9 +10,8 @@ export default function Contact() {
 
   return (
     <>
-      <p className="eyebrow">Leave a note</p>
+      <p className="eyebrow">mail stavya</p>
       <h1 className="page-title">Contact</h1>
-      <p>Write a note below and it opens in your email app, ready to send.</p>
       <div className="field">
         <label htmlFor="name">Your name</label>
         <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
